@@ -1,4 +1,4 @@
-import { PubSub } from '@google-cloud/pubsub';
+import { PubSub, Message as PubSubMessage } from '@google-cloud/pubsub';
 import { PubSubEngine } from 'graphql-subscriptions';
 import { PubSubAsyncIterator } from './async-iterator';
 
@@ -7,6 +7,8 @@ class NoSubscriptionOfIdError extends Error {
     super(`There is no subscription of id "${subId}"`);
   }
 }
+
+export type Message = PubSubMessage & { data: any };
 
 export default class GooglePubSub implements PubSubEngine {
   constructor(
@@ -30,6 +32,20 @@ export default class GooglePubSub implements PubSubEngine {
     return this.pubSubClient
       .topic(topicName)
       .publish(Buffer.from(data), attributes);
+  }
+
+  public publishMessage(topicName: string, message: Message) {
+    let { data } = message;
+    if (typeof data !== 'string') {
+      data = JSON.stringify(data);
+    }
+
+    return this.pubSubClient
+      .topic(topicName)
+      .publishMessage({
+        ...message,
+        data: Buffer.from(data),
+      });
   }
 
   private async getSubscription(topicName, subName, options?) {

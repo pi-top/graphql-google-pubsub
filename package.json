@@ -36,7 +36,8 @@
     "watch": "tsc -w",
     "testonly": "mocha --reporter spec --full-trace ./dist/test/tests.js ",
     "preintegration": "npm run compile",
-    "integration": "mocha --reporter spec --full-trace ./dist/test/integration-tests.js"
+    "integration": "mocha --reporter spec --full-trace ./dist/test/integration-tests.js",
+    "install": "npm run compile"
   },
   "dependencies": {
     "@google-cloud/pubsub": "^1.1.5",

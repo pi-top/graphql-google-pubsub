@@ -30,7 +30,7 @@
     "prepublishOnly": "npm run test",
     "compile": "tsc",
     "pretest": "npm run compile",
-    "test": "npm run testonly -- && npm run integration --",
+    "test": "npm run testonly --",
     "posttest": "npm run lint",
     "lint": "tslint --project ./tsconfig.json ./src/**/*.ts",
     "watch": "tsc -w",

@@ -26,6 +26,9 @@
       "email": "jonas@arkulpa.at"
     }
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "prepublishOnly": "npm run test",
     "compile": "tsc",

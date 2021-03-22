@@ -23,13 +23,17 @@ export default class GooglePubSub implements PubSubEngine {
     this.commonMessageHandler = commonMessageHandler;
   }
 
-  public publish(topicName: string, data: any, attributes?: object) {
+  public publish(topicName: string, data: any, attributes?: object, orderingKey?: string) {
     if (typeof data !== 'string') {
       data = JSON.stringify(data);
     }
     return this.pubSubClient
       .topic(topicName)
-      .publish(Buffer.from(data), attributes);
+      .publishMessage({
+        data: Buffer.from(data),
+        attributes,
+        orderingKey,
+      });
   }
 
   private async getSubscription(topicName, subName, options?) {

@@ -35,7 +35,7 @@ function getMockedGooglePubSub({ topic2SubName = undefined, commonMessageHandler
   };
 
   const topicMock = {
-    publish: spy((data, attributes) => listener && listener({ ack: ackSpy, data, attributes })),
+    publishMessage: spy((message) => listener && listener({ ack: ackSpy, data: message.data })),
     createSubscription: spy(subName => Promise.resolve([subscriptionMock]))
   };
 
